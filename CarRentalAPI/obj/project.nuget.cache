@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "4lUqOAkedTVTVg3sp3emSgtVyWo4sNUshNOGhUfq053d9Tppkj0i/CeTnVol1D3lyJbqtTi47MhfmvPgZ8EFHA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\pc\\OneDrive\\Dokumenty\\all\\Code\\___Git___\\-=_cetuspro_=-\\Car-Rental-back-end\\CarRentalAPI\\CarRentalAPI\\CarRentalAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pc\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
