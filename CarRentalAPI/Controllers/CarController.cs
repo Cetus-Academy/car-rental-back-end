@@ -1,30 +1,41 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CarRentalAPI.Services;
+using Microsoft.AspNetCore.Mvc;
 
-namespace CarRentalAPI.Controllers
+namespace CarRentalAPI.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class CarController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class CarController : ControllerBase
+    private readonly CarService _carService;
+
+    public CarController(CarService carService)
     {
-        private readonly ILogger<CarController> _logger;
-        private readonly ICarService _service;
+        _carService = carService;
+    }
 
-        public CarController(ILogger<CarController> logger, ICarService service)
-        {
-            _logger = logger;
-            _service = service;
-        }
+    [HttpGet]
+    public ActionResult GetAll()
+    {
+        return Ok();
+    }
 
-        [HttpGet("{id}")]
-        public IEnumerable<CarController> Get([FromBody] int id)
-        {
-            var result = _service.Get(id);
-            return result;
-        }
+    [HttpGet("{id}")]
+    public ActionResult<IEnumerable<CarController>> GetById([FromBody] int id)
+    {
+        var car = _carService.GetById(id);
+
+        if (car is null)
+            return NotFound();
+
+        return Ok(car);
+    }
+
+    [HttpDelete("{id}")]
+    public ActionResult Delete([FromRoute] int id)
+    {
+        var isDeleted = _carService.Delete(id);
+
+        return isDeleted ? NoContent() : NotFound();
     }
 }
