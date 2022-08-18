@@ -19,12 +19,6 @@ namespace CarRentalAPI.Services
         IEnumerable<Car> GetAll();
         Car GetById(int id);
         Car GetBySlug(string slug);
-        //Car GetById(int id);
-        //CarDto GetById(int id);
-        //IEnumerable<CarDto> GetAll();
-        //int Create(CreateCarDto dto);
-        //bool Delete(int id);
-        //bool Update(int id, UpdateCarDto dto);
         int Create(Car car);
     }
     public class CarService : ICarService
@@ -51,9 +45,6 @@ namespace CarRentalAPI.Services
         };
         public bool Delete(int id)
         {
-            //var car = _dbContext
-            //    .Cars
-            //    .FirstOrDefault(r => r.Id == id);
             var car = _dbContext.Cars.Find(id);
 
             if (car is null) return false;
@@ -86,20 +77,14 @@ namespace CarRentalAPI.Services
                 .ToList();
 
             return cars;
-            //if (cars is null) return null;
-            //var result = cars;
-            //return result;
-            //throw new NotImplementedException();
-            //return null;
         }
         public Car GetById(int id)
         {
             var car = _dbContext
                 .Cars
-                //.Include(r => r.Slug)
                 .FirstOrDefault(r => r.Id == id);
 
-            return car;//if car is null then return null
+            return car;
         }
         public Car GetBySlug(string slug)
         {
@@ -107,7 +92,7 @@ namespace CarRentalAPI.Services
                 .Cars
                 .FirstOrDefault(r => r.Slug == slug);
 
-            return car;//if car is null then return null
+            return car;
         }
         public int Create(Car car)
         {

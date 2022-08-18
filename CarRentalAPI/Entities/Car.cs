@@ -4,6 +4,7 @@ public class Car
 {
     public int Id { get; set; }
     public string Slug { get; set; }
+    //public string Name { get; set; }//TODO: fix when DTO (is ready) slug needs to be automaticly generated from name, slug can be overwritten
         
     public int Displacement { get; set; }
     public string Fuel { get; set; }
@@ -22,15 +23,8 @@ public class Car
     public double FuelUsage { get; set; }
     public string PresentLocation { get; set; }
     public int NumberOfAvailableModels { get; set; }
-
-    //public int CarBrandId { get; set; }
+    
     public CarBrand CarBrand { get; set; }// one-many
     public ICollection<Image> Images { get; set; } = new List<Image>();// many-one
     public ICollection<CarEquipment> CarEquipments { get; set; } = new List<CarEquipment>();// many-one
-
-    //TODO:
-    /**
-     * fix nullable initalization
-     * 
-     */
 }
