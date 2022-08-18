@@ -1,4 +1,5 @@
-﻿using CarRentalAPI.Services;
+﻿using CarRentalAPI.Entities;
+using CarRentalAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalAPI.Controllers;
@@ -7,30 +8,13 @@ namespace CarRentalAPI.Controllers;
 [Route("[controller]")]
 public class CarController : ControllerBase
 {
-    private readonly CarService _carService;
+    private readonly ICarService _carService;
 
-    public CarController(CarService carService)
+    public CarController(ICarService carService)
     {
         _carService = carService;
     }
-
-    [HttpGet]
-    public ActionResult GetAll()
-    {
-        return Ok();
-    }
-
-    [HttpGet("{id}")]
-    public ActionResult<IEnumerable<CarController>> GetById([FromBody] int id)
-    {
-        var car = _carService.GetById(id);
-
-        if (car is null)
-            return NotFound();
-
-        return Ok(car);
-    }
-
+    
     [HttpDelete("{id}")]
     public ActionResult Delete([FromRoute] int id)
     {
@@ -38,4 +22,49 @@ public class CarController : ControllerBase
 
         return isDeleted ? NoContent() : NotFound();
     }
+    [HttpPut("{id}")]
+    public ActionResult Update([FromBody] Car car, [FromRoute] int id)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var isUpdated = _carService.Update(id, car);
+ 
+        return isUpdated ? NotFound() : Ok();
+    }
+    [HttpGet]
+    public ActionResult<IEnumerable<Car>> GetAll()
+    {
+        var cars = _carService.GetAll();
+
+        return Ok(cars);
+    }
+
+    [HttpGet("id/{id}")]
+    public ActionResult<Car> GetById([FromRoute] int id)
+    {
+        var car = _carService.GetById(id);
+        
+        return car is null? NotFound() : Ok(car);
+    }
+    [HttpGet("{slug}")]
+    public ActionResult<Car> Get([FromRoute] string slug)
+    {
+        var car = _carService.GetBySlug(slug);
+
+        return car is null? NotFound() : Ok(car);
+    }
+    [HttpPost]
+    public ActionResult CreateRestaurant([FromBody] Car car)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        int id = _carService.Create(car);
+
+        return Created($"/api/restaurant/{id}", null);
+    }
+
 }

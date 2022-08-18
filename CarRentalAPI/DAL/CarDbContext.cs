@@ -12,7 +12,6 @@ public class CarDbContext : DbContext
     public const string _connectionString =
         "Server=(localdb)\\mssqllocaldb;Database=CarDb;Trusted_Connection=True;";
     public DbSet<Car> Cars { get; set; }
-    public DbSet<CarAttribute> CarDetails { get; set; }
     public DbSet<CarEquipment> CarEquipment { get; set; }
     public DbSet<CarBrand> CarBrand { get; set; }
     public DbSet<Image> Image { get; set; }

@@ -27,7 +27,6 @@ public class Car
     public CarBrand CarBrand { get; set; }// one-many
     public ICollection<Image> Images { get; set; } = new List<Image>();// many-one
     public ICollection<CarEquipment> CarEquipments { get; set; } = new List<CarEquipment>();// many-one
-    public ICollection<CarAttribute> CarAttributes { get; set; } = new List<CarAttribute>();// many-one
 
     //TODO:
     /**
