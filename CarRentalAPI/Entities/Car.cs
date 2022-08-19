@@ -4,8 +4,8 @@ public class Car
 {
     public int Id { get; set; }
     public string Slug { get; set; }
-    //public string Name { get; set; }//TODO: fix when DTO (is ready) slug needs to be automaticly generated from name, slug can be overwritten
-        
+    public string Name { get; set; }//TODO: fix when DTO (is ready) slug needs to be automaticly generated from name, slug can be overwritten
+
     public int Displacement { get; set; }
     public string Fuel { get; set; }
     public string Description { get; set; }

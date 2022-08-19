@@ -15,6 +15,7 @@ public class CarDbContext : DbContext
     public DbSet<CarEquipment> CarEquipment { get; set; }
     public DbSet<CarBrand> CarBrand { get; set; }
     public DbSet<Image> Image { get; set; }
+    public DbSet<Product> Products { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -22,6 +23,21 @@ public class CarDbContext : DbContext
             .Property(r => r.Slug)
             .IsRequired()
             .HasMaxLength(75);
+        
+        modelBuilder.Entity<Car>()
+            .Property(r => r.Name)
+            .IsRequired()
+            .HasMaxLength(76);
+
+        modelBuilder.Entity<Product>()
+            .Property(r => r.Slug)
+            .IsRequired()
+            .HasMaxLength(40);
+
+        modelBuilder.Entity<Product>()
+            .Property(r => r.Name)
+            .IsRequired()
+            .HasMaxLength(41);
 
         //TODO: add more db row limits
     }

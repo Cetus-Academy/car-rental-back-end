@@ -1,13 +1,4 @@
-﻿using AutoMapper;
-using CarRentalAPI.Controllers;
-using CarRentalAPI.Entities;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CarRentalAPI.Entities;
 using CarRentalAPI.DAL;
 
 namespace CarRentalAPI.Services
@@ -23,7 +14,7 @@ namespace CarRentalAPI.Services
     }
     public class CarService : ICarService
     {
-        private readonly CarDbContext _dbContext = null!;
+        private readonly CarDbContext _dbContext;
 
         public CarService(CarDbContext dbContext)//, IMapper mapper
         {
@@ -56,14 +47,14 @@ namespace CarRentalAPI.Services
         }
         public bool Update(int id, Car car)
         {
-            var restaurant = _dbContext
+            var cars = _dbContext
                 .Cars
                 .FirstOrDefault(r => r.Id == id);
 
-            if (restaurant is null) return false;
+            if (car is null) return false;
 
-            restaurant.Slug = car.Slug;
-            restaurant.Description = car.Description;
+            car.Slug = car.Slug;
+            car.Description = car.Description;
             //TODO: ask what rows can be changed
 
             _dbContext.SaveChanges();

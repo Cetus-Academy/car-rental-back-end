@@ -17,12 +17,38 @@ public class CarSeeder
             if (!_dbContext.Cars.Any())
             {
                 var cars = GetCars();
+                var products = GetProducts();
+                _dbContext.Products.AddRange(products);
                 _dbContext.Cars.AddRange(cars);
                 _dbContext.SaveChanges();
             }
         }
     }
 
+    private IEnumerable<Product> GetProducts()
+    {
+        var products = new List<Product>()
+        {
+            new Product()
+            {
+                Slug = "naklejki-na-samochod-10-szt",
+                Name = "Naklejki na samochód 10 szt.",
+                Price = 25.99,
+                VatPercentage = 0.23,
+                Condition = "nowy",
+                Images = new List<Image>()
+                {
+                    new Image()
+                    {
+                        Src =
+                            "https://a.allegroimg.com/original/11ce9c/6d70593b4015b139321a2344b6cf/Zestaw-naklejek-na-samochod-LAMINOWANE-UV",
+                        Alt = "Zestaw naklejek na samochód"
+                    }
+                }
+            },
+        };
+        return products;
+    }
     private IEnumerable<Car> GetCars()
     {
         var cars = new List<Car>()
@@ -30,6 +56,7 @@ public class CarSeeder
             new Car()
             {
                 Slug = "volkswagen-passat-b8",
+                Name = "volkswagen passat b8",
                 Model = "Passat",
                 Generate = "B8",
                 YearOfProduction = 2018,

@@ -39,8 +39,7 @@ public class CarController : ControllerBase
 
         return Ok(cars);
     }
-
-    [HttpGet("id/{id}")]
+    [HttpGet("{id:int}")]
     public ActionResult<Car> GetById([FromRoute] int id)
     {
         var car = _carService.GetById(id);
