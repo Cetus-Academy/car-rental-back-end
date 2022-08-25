@@ -30,7 +30,7 @@ public class CarController : ControllerBase
 
         var isUpdated = _carService.Update(id, car);
  
-        return isUpdated ? NotFound() : Ok();
+        return isUpdated ? Ok() : NotFound();
     }
     [HttpGet]
     public ActionResult<IEnumerable<Car>> GetAll()

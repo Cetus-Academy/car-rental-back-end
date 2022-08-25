@@ -30,7 +30,7 @@ public class ProductController : ControllerBase
 
         var isUpdated = _productService.Update(id, product);
  
-        return isUpdated ? NotFound() : Ok();
+        return isUpdated ? Ok() : NotFound();
     }
     [HttpGet]
     public ActionResult<IEnumerable<Product>> GetAll()

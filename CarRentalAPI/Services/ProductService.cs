@@ -35,14 +35,14 @@ namespace CarRentalAPI.Services
         }
         public bool Update(int id, Product product)
         {
-            var products = _dbContext
+            var foundProduct = _dbContext
                 .Products
                 .FirstOrDefault(r => r.Id == id);
 
-            if (product is null) return false;
+            if (foundProduct is null) return false;
 
-            product.Slug = product.Slug;
-            product.Description = product.Description;
+            foundProduct.Slug = product.Slug;
+            foundProduct.Description = product.Description;
             //TODO: ask what rows can be changed
 
             _dbContext.SaveChanges();
