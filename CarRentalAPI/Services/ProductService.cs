@@ -35,7 +35,7 @@ namespace CarRentalAPI.Services
         }
         public bool Update(int id, Product product)
         {
-            var Products = _dbContext
+            var products = _dbContext
                 .Products
                 .FirstOrDefault(r => r.Id == id);
 
