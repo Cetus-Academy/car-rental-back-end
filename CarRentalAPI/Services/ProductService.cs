@@ -8,6 +8,7 @@ namespace CarRentalAPI.Services
         bool Delete(int id);
         bool Update(int id, Product product);
         IEnumerable<Product> GetAll();
+        IEnumerable<Product> GetSearched(string searchString);
         Product GetById(int id);
         Product GetBySlug(string slug);
         int Create(Product product);
@@ -55,6 +56,15 @@ namespace CarRentalAPI.Services
                 .Products
                 .ToList();
 
+            return products;
+        }
+        public IEnumerable<Product> GetSearched(string searchString)
+        {
+            var products = _dbContext
+                .Products
+                .Where(p => p.Name.Contains(searchString))//Name!
+                .ToArray();
+            
             return products;
         }
         public Product GetById(int id)

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CarRentalAPI.Controllers;
 
 [ApiController]
-[Route("product")]
+[Route("products")]
 public class ProductController : ControllerBase
 {
     private readonly IProductService _productService;
@@ -32,19 +32,30 @@ public class ProductController : ControllerBase
  
         return isUpdated ? Ok() : NotFound();
     }
-    [HttpGet]
+    /*[HttpGet]
     public ActionResult<IEnumerable<Product>> GetAll()
     {
         var products = _productService.GetAll();
 
         return Ok(products);
-    }
+    }*/
     [HttpGet("{id:int}")]
     public ActionResult<Product> GetById([FromRoute] int id)
     {
         var product = _productService.GetById(id);
         
         return product is null? NotFound() : Ok(product);
+    }
+    //:regex(^A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ 0-9$)
+    //[HttpGet("searchString/{searchString}")]//:regex(^A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ 0-9$)
+    //[HttpGet("{searchString=\"\"}")]//:regex(^A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ 0-9$)
+    [HttpGet]
+    public ActionResult<Product> GetBySearched([FromQuery] string searchString)
+    {
+        var products = searchString is null ? 
+             _productService.GetAll() : 
+             _productService.GetSearched(searchString);
+        return Ok(products);
     }
     [HttpGet("{slug}")]
     public ActionResult<Product> Get([FromRoute] string slug)
