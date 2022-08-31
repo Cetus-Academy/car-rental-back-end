@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CarDbContext>();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<CarRentalAPI.DAL.CarSeeder>();
 
 var app = builder.Build();
