@@ -9,7 +9,7 @@ using SendGrid.Helpers.Mail;
 namespace CarRentalAPI.Controllers;
 
 [ApiController]
-[Route("email")]
+[Route("contact-form")]
 
 public class EmailController : ControllerBase
 {

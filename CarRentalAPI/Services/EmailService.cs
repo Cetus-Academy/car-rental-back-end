@@ -26,7 +26,7 @@ public class EmailService : IEmailService
     }
     private async Task SendContactFormEmailReceive(string senderEmail, string contactFormMessage)
     {
-        var apiKey = "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";
+        var apiKey = ;
         var client = new SendGridClient(apiKey);
         var from = new EmailAddress("cet.us.autonomus@gmail.com", "Fifonż Kowalski");
         var subject = "Contact";
@@ -38,7 +38,7 @@ public class EmailService : IEmailService
     }
     private async Task SendContactFormEmailConfirmation(string senderEmail, string contactFormMessage)
     {
-        var apiKey = "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";
+        var apiKey = ;
         var client = new SendGridClient(apiKey);
         var from = new EmailAddress("cet.us.autonomus@gmail.com", "Fifonż Kowalski");
         var subject = "Contact Confirmation";
