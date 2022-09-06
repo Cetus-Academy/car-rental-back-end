@@ -1,3 +1,4 @@
+using CarRentalAPI.Common.statics;
 using CarRentalAPI.DAL;
 using CarRentalAPI.Entities;
 using CarRentalAPI.Migrations;
@@ -16,6 +17,8 @@ builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<CarRentalAPI.DAL.CarSeeder>();
+EmailSettings.ApiKey = builder.Configuration.GetValue<string>("MailSettings:Key");
+EmailSettings.Message = builder.Configuration.GetValue<string>("MailSettings:Message");
 
 var app = builder.Build();
 
