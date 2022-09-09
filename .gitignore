@@ -3,6 +3,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+CarRentalAPI/obj
+CarRentalAPI/bin
+CarRentalAPI/appsettings.json
+*CarRentalAPI/appsettings.json
+*appsettings.json*
+
 # User-specific files
 *.suo
 *.userosscache
@@ -11,6 +17,7 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+*/obj
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
