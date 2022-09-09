@@ -11,6 +11,7 @@ public class CarDbContext : DbContext
     }
     public const string _connectionString =
         "Server=(localdb)\\mssqllocaldb;Database=CarDb;Trusted_Connection=True;";
+    //$"Server=172.105.69.50;Port=40000;Database=carrental_staging;User Id=carrental_staging_user;Password={DbPassword};"
     public DbSet<Car> Cars { get; set; }
     public DbSet<CarEquipment> CarEquipment { get; set; }
     public DbSet<CarBrand> CarBrand { get; set; }

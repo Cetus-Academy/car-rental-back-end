@@ -22,7 +22,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Common" />
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Interfaces\**" />
+    <Compile Remove="Common\Statics\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Common\Statics\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Interfaces\**" />
+    <None Remove="Common\Statics\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Interfaces\**" />
+    <Content Remove="Common\Statics\**" />
   </ItemGroup>
 
 </Project>
