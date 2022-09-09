@@ -1,10 +1,6 @@
 using System.Text.RegularExpressions;
 using CarRentalAPI.Entities;
-using CarRentalAPI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 
 namespace CarRentalAPI.Controllers;
 

@@ -1,7 +1,8 @@
 using System.Net;
+using CarRental.Application.Shared;
+using CarRental.Shared.Services;
 using EmailService.Common;
 using EmailService.Models;
-using EmailService.Services;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 

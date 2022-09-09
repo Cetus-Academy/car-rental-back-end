@@ -3,6 +3,8 @@ using CarRentalAPI.DAL;
 using CarRentalAPI.Entities;
 using CarRentalAPI.Migrations;
 using CarRentalAPI.Services;
+using EmailService;
+using EmailService.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 

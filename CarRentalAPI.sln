@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRentalAPI", "CarRentalAP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "EmailService\EmailService.csproj", "{9D996721-F380-4D19-826F-50E04ACA8123}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRental.Shared", "CarRental.Shared\CarRental.Shared.csproj", "{C579D860-1A64-433A-93D8-667C28ECCAFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRental.Application.Shared", "CarRental.Application.Shared\CarRental.Application.Shared.csproj", "{F4A409C9-B56D-4154-8400-295556202084}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{9D996721-F380-4D19-826F-50E04ACA8123}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D996721-F380-4D19-826F-50E04ACA8123}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D996721-F380-4D19-826F-50E04ACA8123}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C579D860-1A64-433A-93D8-667C28ECCAFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C579D860-1A64-433A-93D8-667C28ECCAFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C579D860-1A64-433A-93D8-667C28ECCAFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C579D860-1A64-433A-93D8-667C28ECCAFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4A409C9-B56D-4154-8400-295556202084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4A409C9-B56D-4154-8400-295556202084}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4A409C9-B56D-4154-8400-295556202084}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4A409C9-B56D-4154-8400-295556202084}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,14 +1,12 @@
 using System.Reflection;
 using EmailService.Interfaces;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EmailService;
 
 public static class EmailServiceRegistration
 {
-    public static IServiceCollection AddEmailService(this IServiceCollection services,
-        IConfiguration configuration)
+    public static IServiceCollection AddEmailService(this IServiceCollection services)
     {
         services.AddScoped<IEmailSendingRepository, EmailSendingRepository>();
         

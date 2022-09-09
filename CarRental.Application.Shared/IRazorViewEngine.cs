@@ -1,4 +1,4 @@
-namespace EmailService.Services;
+namespace CarRental.Application.Shared;
 
 public interface IRazorViewRenderer
 {
