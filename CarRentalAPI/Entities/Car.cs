@@ -17,14 +17,12 @@ public class Car
     public string Drive { get; set; }
     public int NumberOfDoors { get; set; }
     public int NumberOfPlaces { get; set; }
-    public string Color { get; set; }
-    public string CountryOfOrigin { get; set; }
-    public string CarCondition { get; set; }
     public double FuelUsage { get; set; }
-    public string PresentLocation { get; set; }
     public int NumberOfAvailableModels { get; set; }
     
     public CarBrand CarBrand { get; set; }// one-many
+
+    public ICollection<CarSpecimen> CarSpecimens { get; set; } = new List<CarSpecimen>();//manu-one
     public ICollection<Image> Images { get; set; } = new List<Image>();// many-one
     public ICollection<CarEquipment> CarEquipments { get; set; } = new List<CarEquipment>();// many-one
 }
