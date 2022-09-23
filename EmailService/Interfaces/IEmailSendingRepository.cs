@@ -46,9 +46,9 @@ public class EmailSendingRepository : IEmailSendingRepository
 
         var client = new SendGridClient(EmailSettings.ApiKey);
         var from = new EmailAddress(EmailSettings.Email, EmailSettings.Message);
-        var reciver = new EmailAddress(model.Email);
+        var receiver = new EmailAddress(model.Email);
 
-        var msg = MailHelper.CreateSingleEmail(from, reciver, model.Subject, model.PlainContent,
+        var msg = MailHelper.CreateSingleEmail(from, receiver, model.Subject, model.PlainContent,
             model.HtmlContent);
     
         var response = await client.SendEmailAsync(msg);

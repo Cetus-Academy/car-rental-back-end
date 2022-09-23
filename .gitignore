@@ -7,6 +7,8 @@ CarRentalAPI/obj
 CarRentalAPI/bin
 CarRentalAPI/appsettings.json
 *CarRentalAPI/appsettings.json
+*appsettings.json
+*appsettings.development.json
 *appsettings.json*
 
 # User-specific files

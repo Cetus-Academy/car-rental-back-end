@@ -1,5 +1,10 @@
+/*using System.Text.RegularExpressions;
+using CarRentalAPI.Entities;
+using Microsoft.AspNetCore.Mvc;*/
+
 using System.Text.RegularExpressions;
 using CarRentalAPI.Entities;
+using EmailService.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalAPI.Controllers;
@@ -9,11 +14,11 @@ namespace CarRentalAPI.Controllers;
 
 public class EmailController : ControllerBase
 {
-    private readonly IEmailService _emailService;
+    private readonly IEmailSendingRepository _emailSendingRepository;
 
-    public EmailController(IEmailService emailService)
+    public EmailController(IEmailSendingRepository mailSendingRepository)
     {
-        _emailService = emailService;
+        _emailSendingRepository = mailSendingRepository;
     }
 
     [HttpPost]
@@ -33,7 +38,9 @@ public class EmailController : ControllerBase
         if (!regExMessage.IsMatch(contactFormMessage))
             return BadRequest(new {message = "Nie podałeś wiadomości", emailSend = false});
         
-        await _emailService.SendContactFormEmail(senderEmail, contactFormMessage);
+        //await _emailSendingRepository.SendContactFormEmail(senderEmail, contactFormMessage);\
+        await _emailSendingRepository.SendFormContactEmail(senderEmail, contactFormMessage);
+        
         return Ok(new {message = "Ok, Wysłano", emailSend = true});
     }
 }

@@ -67,15 +67,33 @@ public class CarSeeder
                 Drive = "4x4",
                 NumberOfDoors = 5,
                 NumberOfPlaces = 5,
-                Color = "czarny",
-                CountryOfOrigin = "Polska",
-                // FirstRegistration = "01/05/2018",
-                CarCondition = "używany",
+                //CountryOfOrigin = "Polska",
                 FuelUsage = 7.5,
-                PresentLocation = "Kraków",
                 NumberOfAvailableModels = 14,
                 Description =
                     "Do wynajęcia Volkswagen Passat B8. Samochód ma około 60 000 przebiegu, jest w stanie dobrym. Kupiony został w Polsce, jest w 100% bezwypadkowy. Wszystkie elementy nadwozia są w oryginalnym lakierze.",
+                CarSpecimens = new List<CarSpecimen>()
+                {
+                    new CarSpecimen()
+                    {
+                        Color = "czarny",
+                        //CarCondition = "używany",
+                        PresentLocation = "Kraków",
+                        Registration = "01/05/2018",
+                        CarSpecimenReservationIntermediates = new List<CarSpecimenReservationIntermediate>()
+                        {
+                            new CarSpecimenReservationIntermediate()
+                            {
+                                new CarSpecimenReservation() {
+                                    DateFrom = "11/11/2022",
+                                    DateTo = "12/11/2022",
+                                    Name = "Jan",
+                                    LastName = "Kowalski"
+                                }
+                            }
+                        }
+                    }
+                },
                 Images = new List<Image>()
                 {
                     new Image(){

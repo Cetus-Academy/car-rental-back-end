@@ -16,6 +16,9 @@ public class CarDbContext : DbContext
     public DbSet<CarEquipment> CarEquipment { get; set; }
     public DbSet<CarBrand> CarBrand { get; set; }
     public DbSet<Image> Image { get; set; }
+    public DbSet<CarSpecimen> Specimens { get; set; }
+    public DbSet<CarSpecimenReservation> SpecimensReservations { get; set; }
+    public DbSet<CarSpecimenReservationIntermediate> SpecimensReservationIntermediates { get; set; }
     public DbSet<Product> Products { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
