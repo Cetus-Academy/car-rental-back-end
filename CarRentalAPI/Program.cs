@@ -25,6 +25,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IEmailSendingRepository, EmailSendingRepository>();
 //builder.Services.AddEmailService();
 builder.Services.AddScoped<IRazorViewRenderer, RazorViewRenderer>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<CarRentalAPI.DAL.CarSeeder>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

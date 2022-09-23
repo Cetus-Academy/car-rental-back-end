@@ -1,7 +1,3 @@
-/*using System.Text.RegularExpressions;
-using CarRentalAPI.Entities;
-using Microsoft.AspNetCore.Mvc;*/
-
 using System.Text.RegularExpressions;
 using CarRentalAPI.Entities;
 using EmailService.Interfaces;

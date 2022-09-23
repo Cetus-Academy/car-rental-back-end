@@ -63,7 +63,7 @@ namespace CarRentalAPI.Services
             var products = _dbContext
                 .Products
                 .Where(p => p.Name.Contains(searchString))//Name!
-                .ToArray();
+                .ToList();
             
             return products;
         }
