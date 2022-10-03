@@ -14,7 +14,7 @@ public class ProductController : ControllerBase
     {
         _productService = productService;
     }
-    
+
     [HttpDelete("{id}")]
     public ActionResult Delete([FromRoute] int id)
     {
@@ -22,6 +22,7 @@ public class ProductController : ControllerBase
 
         return isDeleted ? NoContent() : NotFound();
     }
+
     [HttpPut("{id}")]
     public ActionResult Update([FromBody] Product product, [FromRoute] int id)
     {
@@ -29,43 +30,35 @@ public class ProductController : ControllerBase
             return BadRequest(ModelState);
 
         var isUpdated = _productService.Update(id, product);
- 
+
         return isUpdated ? Ok() : NotFound();
     }
-    /*[HttpGet]
-    public ActionResult<IEnumerable<Product>> GetAll()
-    {
-        var products = _productService.GetAll();
 
-        return Ok(products);
-    }*/
     [HttpGet("{id:int}")]
     public ActionResult<Product> GetById([FromRoute] int id)
     {
         var product = _productService.GetById(id);
-        
-        return product is null? NotFound() : Ok(product);
+
+        return product is null ? NotFound() : Ok(product);
     }
-    //:regex(^A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ 0-9$)
-    //[HttpGet("searchString/{searchString}")]//:regex(^A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ 0-9$)
-    //[HttpGet("{searchString=\"\"}")]//:regex(^A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ 0-9$)
+
     [HttpGet]
     public ActionResult<Product> GetBySearched([FromQuery] string searchString)
     {
-        var products = searchString is null ? 
-             _productService.GetAll() : 
-             _productService.GetSearched(searchString);
+        var products = searchString is null ? _productService.GetAll() : _productService.GetSearched(searchString);
         return Ok(products);
     }
+
     [HttpGet("{slug}")]
     public ActionResult<Product> Get([FromRoute] string slug)
     {
         var product = _productService.GetBySlug(slug);
 
-        return product is null? NotFound() : Ok(product);
+        return product is null ? NotFound() : Ok(product);
     }
+
     [HttpPost]
-    public ActionResult CreateRestaurant([FromBody] Product product)
+    public ActionResult CreateProduct([FromBody] Product product)
     {
         if (!ModelState.IsValid)
         {
@@ -76,5 +69,4 @@ public class ProductController : ControllerBase
 
         return Created($"/api/product/{id}", null);
     }
-
 }

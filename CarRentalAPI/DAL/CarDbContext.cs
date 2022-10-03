@@ -1,4 +1,5 @@
-﻿using CarRentalAPI.Entities;
+﻿using CarRentalAPI.Common;
+using CarRentalAPI.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarRentalAPI.DAL;
@@ -7,11 +8,10 @@ public class CarDbContext : DbContext
 {
     public CarDbContext(DbContextOptions<CarDbContext> options) : base()
     {
-
     }
-    public const string _connectionString =
-        "Server=(localdb)\\mssqllocaldb;Database=CarDb;Trusted_Connection=True;";
-    //$"Server=172.105.69.50;Port=40000;Database=carrental_staging;User Id=carrental_staging_user;Password={DbPassword};"
+
+    private static string _connectionString = DatabaseSettings.DbConnectionString;
+
     public DbSet<Car> Cars { get; set; }
     public DbSet<CarEquipment> CarEquipment { get; set; }
     public DbSet<CarBrand> CarBrand { get; set; }
@@ -27,7 +27,7 @@ public class CarDbContext : DbContext
             .Property(r => r.Slug)
             .IsRequired()
             .HasMaxLength(75);
-        
+
         modelBuilder.Entity<Car>()
             .Property(r => r.Name)
             .IsRequired()

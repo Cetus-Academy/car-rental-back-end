@@ -13,16 +13,17 @@ namespace CarRentalAPI.Services
         Product GetBySlug(string slug);
         int Create(Product product);
     }
+
     public class ProductService : IProductService
     {
         private readonly CarDbContext _dbContext;
 
-        public ProductService(CarDbContext dbContext)//, IMapper mapper
+        public ProductService(CarDbContext dbContext) //, IMapper mapper
         {
             _dbContext = dbContext;
             //_mapper = mapper;
         }
-        
+
         public bool Delete(int id)
         {
             var product = _dbContext.Products.Find(id);
@@ -34,6 +35,7 @@ namespace CarRentalAPI.Services
 
             return true;
         }
+
         public bool Update(int id, Product product)
         {
             var foundProduct = _dbContext
@@ -44,12 +46,12 @@ namespace CarRentalAPI.Services
 
             foundProduct.Slug = product.Slug;
             foundProduct.Description = product.Description;
-            //TODO: ask what rows can be changed
 
             _dbContext.SaveChanges();
 
             return true;
         }
+
         public IEnumerable<Product> GetAll()
         {
             var products = _dbContext
@@ -58,15 +60,17 @@ namespace CarRentalAPI.Services
 
             return products;
         }
+
         public IEnumerable<Product> GetSearched(string searchString)
         {
             var products = _dbContext
                 .Products
-                .Where(p => p.Name.Contains(searchString))//Name!
+                .Where(p => p.Name.Contains(searchString)) //Name!
                 .ToList();
-            
+
             return products;
         }
+
         public Product GetById(int id)
         {
             var product = _dbContext
@@ -75,6 +79,7 @@ namespace CarRentalAPI.Services
 
             return product;
         }
+
         public Product GetBySlug(string slug)
         {
             var product = _dbContext
@@ -83,6 +88,7 @@ namespace CarRentalAPI.Services
 
             return product;
         }
+
         public int Create(Product product)
         {
             //var car = _mapper.Map<Car>(dto);

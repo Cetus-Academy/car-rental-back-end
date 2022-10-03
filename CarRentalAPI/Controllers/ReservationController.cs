@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CarRentalAPI.Controllers;
 
 [ApiController]
-[Route("reservation")]
+[Route("reservation-module")]
 public class ReservationController : ControllerBase
 {
     private readonly IReservationService _reservationService;
@@ -15,22 +15,24 @@ public class ReservationController : ControllerBase
     {
         _reservationService = reservationService;
     }
-    
-    [HttpGet("avavible-cars")]
+
+    [HttpGet("avaible-cars")]
     public ActionResult<IEnumerable<Car>> GetAvailableCars([FromQuery] DateTime dateFrom, [FromQuery] DateTime dateTo)
     {
-        var cars = _reservationService.GetAvailableCars(dateFrom, dateTo);
+        var cars = _reservationService.GetAvailableCarsByDateRange(dateFrom, dateTo);
 
         return Ok(cars);
     }
-    [HttpGet("{carId:int}/{year:int}/{month:int}")]
-    public ActionResult<int[]> GetOccupiedDays([FromRoute] int carId, [FromRoute] int year, [FromRoute] int month)
+
+    [HttpGet("car/{carId:int}/occupied-days")]
+    public ActionResult<int[]> GetOccupiedDays([FromRoute] int carId, [FromQuery] int year, [FromQuery] int month)
     {
-        Regex regExYearAndMonth = new Regex("[0-9]{4}[-_: ][0-9]{1,2}");
-        
-        if (!regExYearAndMonth.IsMatch(year.ToString()+month.ToString()))
-            return BadRequest(new { message = "Podałeś błędną datę lub w", hasSearched = false});
-        
+        Regex regExYear = new Regex("[0-9]{4}");
+        Regex regExmonth = new Regex("[0-9]{1,2}");
+
+        if (!regExYear.IsMatch(year.ToString()) && !regExYear.IsMatch(month.ToString()))
+            return BadRequest(new { message = "Podałeś błędny rok lub datę", hasSearched = false });
+
         var cars = _reservationService.GetOccupiedDays(carId, year, month);
 
         return Ok(cars);

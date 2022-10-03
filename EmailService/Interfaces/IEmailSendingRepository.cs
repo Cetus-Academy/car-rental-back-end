@@ -11,7 +11,7 @@ namespace EmailService.Interfaces;
 public interface IEmailSendingRepository
 {
     Task SendFormContactEmail(string email, string message);
-    //TODO: add more
+    //TODO: add a confiramtion e-mail
 }
 
 public class EmailSendingRepository : IEmailSendingRepository
@@ -21,7 +21,8 @@ public class EmailSendingRepository : IEmailSendingRepository
     public EmailSendingRepository(IRazorViewRenderer razorViewRenderer)
     {
         _razorViewRenderer = razorViewRenderer;
-    } 
+    }
+
     public async Task SendFormContactEmail(string email, string message)
     {
         var model = new CarRentalNotificationModel()
@@ -33,13 +34,11 @@ public class EmailSendingRepository : IEmailSendingRepository
         };
         await Send(model);
     }
-    //TODO: add more
 
     async Task Send(EmailModel model)
     {
-        
         var viewName = @"Views/Emails/ContactEmail.cshtml";
-        
+
         var renderedView = await _razorViewRenderer.RenderViewToStringAsync(viewName, model);
 
         model.HtmlContent = renderedView;
@@ -50,11 +49,10 @@ public class EmailSendingRepository : IEmailSendingRepository
 
         var msg = MailHelper.CreateSingleEmail(from, receiver, model.Subject, model.PlainContent,
             model.HtmlContent);
-    
+
         var response = await client.SendEmailAsync(msg);
 
         if (response.StatusCode != HttpStatusCode.Accepted && response.StatusCode != HttpStatusCode.OK)
             throw new Exception("nie udało się");
     }
 }
-

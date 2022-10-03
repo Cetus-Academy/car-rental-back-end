@@ -7,7 +7,6 @@ namespace CarRentalAPI.Controllers;
 
 [ApiController]
 [Route("contact-form")]
-
 public class EmailController : ControllerBase
 {
     private readonly IEmailSendingRepository _emailSendingRepository;
@@ -28,15 +27,14 @@ public class EmailController : ControllerBase
 
         Regex regExMail = new Regex("[a-zA-Z.0-9]+([+]{1}[a-zA-Z.0-9])?@[a-zA-Z]+[.][a-zA-Z]+");
         Regex regExMessage = new Regex(".+");
-        
+
         if (!regExMail.IsMatch(senderEmail))
-            return BadRequest(new { message = "Podałeś błędny email", emailSend = false});
+            return BadRequest(new { message = "Podałeś błędny email", emailSend = false });
         if (!regExMessage.IsMatch(contactFormMessage))
-            return BadRequest(new {message = "Nie podałeś wiadomości", emailSend = false});
-        
-        //await _emailSendingRepository.SendContactFormEmail(senderEmail, contactFormMessage);\
+            return BadRequest(new { message = "Nie podałeś wiadomości", emailSend = false });
+
         await _emailSendingRepository.SendFormContactEmail(senderEmail, contactFormMessage);
-        
-        return Ok(new {message = "Ok, Wysłano", emailSend = true});
+
+        return Ok(new { message = "Ok, Wysłano", emailSend = true });
     }
 }

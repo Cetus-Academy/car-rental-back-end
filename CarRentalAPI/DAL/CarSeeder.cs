@@ -81,8 +81,8 @@ public class CarSeeder
                         Reservations = new Reservations()
                         {
                             Status = "OK",
-                            DateFrom = new DateTime(2022,12,12),//format YYYY-MM-DD
-                            DateTo = new DateTime(2022,12,14),//format YYYY-MM-DD
+                            DateFrom = new DateTime(2022, 12, 12), //format YYYY-MM-DD
+                            DateTo = new DateTime(2022, 12, 14), //format YYYY-MM-DD
                             Name = "Oskar",
                             LastName = "Kowalski"
                         },
@@ -92,8 +92,8 @@ public class CarSeeder
                         Reservations = new Reservations()
                         {
                             Status = "OK",
-                            DateFrom = new DateTime(2022,12,15),//format YYYY-MM-DD
-                            DateTo = new DateTime(2022,12,17),//format YYYY-MM-DD
+                            DateFrom = new DateTime(2022, 12, 15), //format YYYY-MM-DD
+                            DateTo = new DateTime(2022, 12, 17), //format YYYY-MM-DD
                             Name = "Oskar",
                             LastName = "Kowalski"
                         },
@@ -104,14 +104,16 @@ public class CarSeeder
                 {
                     new CarLocation()
                     {
-                        DateTime = new DateTime(2022,10,10, 16,00,00),//format: YYYY-MM-DD HH:MI:SS
+                        DateTime = new DateTimeOffset(2022, 10, 10, 16, 00, 00,
+                            new TimeSpan(0, 0, 0)), //format: YYYY-MM-DD HH:MI:SS
                         Location = "Warsaw",
                         Name = "Oskar",
                         LastName = "Kowalski"
                     },
                     new CarLocation()
                     {
-                        DateTime = new DateTime(2022,12,17, 16,00,00),//format: YYYY-MM-DD HH:MI:SS
+                        DateTime = new DateTimeOffset(2022, 12, 17, 16, 00, 00,
+                            new TimeSpan(0, 0, 0)), //format: YYYY-MM-DD HH:MI:SS
                         Location = "Rzeszow",
                         Name = "Oskar",
                         LastName = "Kowwalski"
