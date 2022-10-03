@@ -12,28 +12,17 @@ namespace CarRentalAPI.Services
         Car GetBySlug(string slug);
         int Create(Car car);
     }
+
     public class CarService : ICarService
     {
         private readonly CarDbContext _dbContext;
 
-        public CarService(CarDbContext dbContext)//, IMapper mapper
+        public CarService(CarDbContext dbContext) //, IMapper mapper
         {
             _dbContext = dbContext;
             //_mapper = mapper;
         }
 
-        private static readonly string[] brands = new[]
-        {
-            "Audi", "Ford", "Mazda", "Mercedes-Benz", "Opel", "Porsche", "Škoda", "Volkswagen"
-        };
-        private static readonly string[] fuelTypes = new[]
-        {
-            "benzyna", "diesel", "LPG"
-        };
-        private static readonly string[] priceCategory = new[]
-        {
-            "Basic", "Standard", "Medium", "Premium"
-        };
         public bool Delete(int id)
         {
             var car = _dbContext.Cars.Find(id);
@@ -45,6 +34,7 @@ namespace CarRentalAPI.Services
 
             return true;
         }
+
         public bool Update(int id, Car car)
         {
             var foundCar = _dbContext
@@ -55,12 +45,12 @@ namespace CarRentalAPI.Services
 
             foundCar.Slug = car.Slug;
             foundCar.Description = car.Description;
-            //TODO: ask what rows can be changed
 
             _dbContext.SaveChanges();
 
             return true;
         }
+
         public IEnumerable<Car> GetAll()
         {
             var cars = _dbContext
@@ -69,6 +59,7 @@ namespace CarRentalAPI.Services
 
             return cars;
         }
+
         public Car GetById(int id)
         {
             var car = _dbContext
@@ -77,6 +68,7 @@ namespace CarRentalAPI.Services
 
             return car;
         }
+
         public Car GetBySlug(string slug)
         {
             var car = _dbContext
@@ -85,6 +77,7 @@ namespace CarRentalAPI.Services
 
             return car;
         }
+
         public int Create(Car car)
         {
             //var car = _mapper.Map<Car>(dto);

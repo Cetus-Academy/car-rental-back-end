@@ -14,7 +14,7 @@ public class CarController : ControllerBase
     {
         _carService = carService;
     }
-    
+
     [HttpDelete("{id}")]
     public ActionResult Delete([FromRoute] int id)
     {
@@ -22,6 +22,7 @@ public class CarController : ControllerBase
 
         return isDeleted ? NoContent() : NotFound();
     }
+
     [HttpPut("{id}")]
     public ActionResult Update([FromBody] Car car, [FromRoute] int id)
     {
@@ -29,9 +30,10 @@ public class CarController : ControllerBase
             return BadRequest(ModelState);
 
         var isUpdated = _carService.Update(id, car);
- 
+
         return isUpdated ? Ok() : NotFound();
     }
+
     [HttpGet]
     public ActionResult<IEnumerable<Car>> GetAll()
     {
@@ -39,22 +41,25 @@ public class CarController : ControllerBase
 
         return Ok(cars);
     }
+
     [HttpGet("{id:int}")]
     public ActionResult<Car> GetById([FromRoute] int id)
     {
         var car = _carService.GetById(id);
-        
-        return car is null? NotFound() : Ok(car);
+
+        return car is null ? NotFound() : Ok(car);
     }
+
     [HttpGet("{slug}")]
     public ActionResult<Car> Get([FromRoute] string slug)
     {
         var car = _carService.GetBySlug(slug);
 
-        return car is null? NotFound() : Ok(car);
+        return car is null ? NotFound() : Ok(car);
     }
+
     [HttpPost]
-    public ActionResult CreateRestaurant([FromBody] Car car)
+    public ActionResult CreateCar([FromBody] Car car)
     {
         if (!ModelState.IsValid)
         {
@@ -65,5 +70,4 @@ public class CarController : ControllerBase
 
         return Created($"/api/car/{id}", null);
     }
-
 }

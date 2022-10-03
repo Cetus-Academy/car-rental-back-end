@@ -1,15 +1,3 @@
-/*
-using CarRental.Application.Shared;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Abstractions;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore.Metadata;*/
-
 using CarRental.Application.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -112,7 +100,6 @@ public class RazorViewRenderer : IRazorViewRenderer
 
     private IView FindView(ActionContext actionContext, string viewName)
     {
-
         var getViewResult = _viewEngine.GetView(executingFilePath: null, viewPath: viewName, isMainPage: true);
         if (getViewResult.Success)
         {
