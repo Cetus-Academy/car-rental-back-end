@@ -45,8 +45,4 @@
     <Content Remove="Common\Statics\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\EmailService\EmailService.csproj" />
-  </ItemGroup>
-
 </Project>

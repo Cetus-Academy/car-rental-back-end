@@ -1,0 +1,90 @@
+﻿using CarRental.Domain;
+using CarRental.Infrastructure.DAL;
+
+namespace CarRental.Infrastructure.Services
+{
+    public interface ICarService
+    {
+        bool Delete(int id);
+        bool Update(int id, Car car);
+        IEnumerable<Car> GetAll();
+        Car GetById(int id);
+        Car GetBySlug(string slug);
+        int Create(Car car);
+    }
+
+    public class CarService : ICarService
+    {
+        private readonly CarDbContext _dbContext;
+
+        public CarService(CarDbContext dbContext) //, IMapper mapper
+        {
+            _dbContext = dbContext;
+            //_mapper = mapper;
+        }
+
+        public bool Delete(int id)
+        {
+            var car = _dbContext.Cars.Find(id);
+
+            if (car is null) return false;
+
+            _dbContext.Cars.Remove(car);
+            _dbContext.SaveChanges();
+
+            return true;
+        }
+
+        public bool Update(int id, Car car)
+        {
+            var foundCar = _dbContext
+                .Cars
+                .FirstOrDefault(r => r.Id == id);
+
+            if (foundCar is null) return false;
+
+            foundCar.Slug = car.Slug;
+            foundCar.Description = car.Description;
+
+            _dbContext.SaveChanges();
+
+            return true;
+        }
+
+        public IEnumerable<Car> GetAll()
+        {
+            var cars = _dbContext
+                .Cars
+                .ToList();
+
+            return cars;
+        }
+
+        public Car GetById(int id)
+        {
+            var car = _dbContext
+                .Cars
+                .FirstOrDefault(r => r.Id == id);
+
+            return car;
+        }
+
+        public Car GetBySlug(string slug)
+        {
+            var car = _dbContext
+                .Cars
+                .FirstOrDefault(r => r.Slug == slug);
+
+            return car;
+        }
+
+        public int Create(Car car)
+        {
+            //var car = _mapper.Map<Car>(dto);
+            _dbContext.Cars.Add(car);
+            _dbContext.SaveChanges();
+
+            return car.Id;
+        }
+    }
+}
