@@ -3,6 +3,14 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+CarRentalAPI/obj
+CarRentalAPI/bin
+CarRentalAPI/appsettings.json
+*CarRentalAPI/appsettings.json
+*appsettings.json
+*appsettings.development.json
+*appsettings.json*
+
 # User-specific files
 *.suo
 *.userosscache
@@ -11,6 +19,7 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+*/obj
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -24,7 +33,8 @@ bld/
 [Ll]og/
 
 # Visual Studio 2015/2017 cache/options directory
-.vs/
+.vs/*
+*.vs/*
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
