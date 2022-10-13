@@ -18,8 +18,10 @@ public class Car
     public int NumberOfPlaces { get; set; }
     public double FuelUsage { get; set; }
 
-
+    public CarRental CarRental { get; set; }
+    public int CarRentalId { get; set; }
     public CarBrand CarBrand { get; set; } // one-many
+    public int CarBrandId { get; set; }
     public ICollection<CarReservations> CarReservations { get; set; } = new List<CarReservations>(); //manu-one
     public ICollection<CarLocation> CarLocation { get; set; } = new List<CarLocation>(); // many-one
     public ICollection<Image> Images { get; set; } = new List<Image>(); // many-one

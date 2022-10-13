@@ -33,7 +33,7 @@ namespace CarRentalAPI.Migrations
                     b.Property<int>("CarBrandId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CarRentalId")
+                    b.Property<int>("CarRentalId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -130,7 +130,6 @@ namespace CarRentalAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Icon")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -344,11 +343,15 @@ namespace CarRentalAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CarRental.Domain.CarRental", null)
+                    b.HasOne("CarRental.Domain.CarRental", "CarRental")
                         .WithMany("Cars")
-                        .HasForeignKey("CarRentalId");
+                        .HasForeignKey("CarRentalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CarBrand");
+
+                    b.Navigation("CarRental");
                 });
 
             modelBuilder.Entity("CarRental.Domain.CarEquipment", b =>

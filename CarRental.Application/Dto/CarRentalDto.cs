@@ -1,6 +1,6 @@
-﻿namespace CarRental.Domain;
+namespace CarRental.Application.Dto;
 
-public class CarRental
+public class CarRentalDto
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -8,5 +8,4 @@ public class CarRental
     public string Street { get; set; }
     public string PostalCode { get; set; }
     public int PricePerDay { get; set; }
-    public List<Car> Cars { get; set; } = new List<Car>();
 }

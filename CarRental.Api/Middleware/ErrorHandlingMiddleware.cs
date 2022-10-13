@@ -1,4 +1,4 @@
-using SendGrid.Helpers.Errors.Model;
+using CarRental.Application.Exceptions;
 
 namespace CarRental.API.Middleware;
 

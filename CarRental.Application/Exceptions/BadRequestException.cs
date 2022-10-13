@@ -1,4 +1,4 @@
-namespace CarRental.API.Exceptions;
+namespace CarRental.Application.Exceptions;
 
 public class BadRequestException : Exception
 {

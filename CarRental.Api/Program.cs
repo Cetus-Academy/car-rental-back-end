@@ -23,12 +23,11 @@ builder.Services.AddScoped<IEmailSendingRepository, EmailSendingRepository>();
 builder.Services.AddScoped<IRazorViewRenderer, RazorViewRenderer>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<CarSeeder>();
-
-//added
 builder.Services.AddTransient<ICarRentalService, CarRentalService>();
 builder.Services.AddScoped<ICarRentalRepository, CarRentalRepository>();
 builder.Services.AddScoped<CarErrorHandlingMiddleware>();
-//
+//autoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

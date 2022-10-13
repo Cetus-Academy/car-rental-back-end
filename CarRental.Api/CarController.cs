@@ -1,4 +1,5 @@
-﻿using CarRental.Domain;
+﻿using CarRental.Application.Dto;
+using CarRental.Domain;
 using CarRental.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,57 +17,55 @@ public class CarController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public ActionResult Delete([FromRoute] int id)
+    public async Task<ActionResult> Delete([FromRoute] int id)
     {
-        var isDeleted = _carService.Delete(id);
+        var isDeleted = await _carService.Delete(id);
 
         return isDeleted ? NoContent() : NotFound();
     }
 
     [HttpPut("{id}")]
-    public ActionResult Update([FromBody] Car car, [FromRoute] int id)
+    public async Task<ActionResult> Update([FromBody] Car car, [FromRoute] int id)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var isUpdated = _carService.Update(id, car);
-
+        var isUpdated = await _carService.Update(id, car);
+        
         return isUpdated ? Ok() : NotFound();
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Car>> GetAll()
+    public async Task<OkObjectResult> GetAll()
     {
-        var cars = _carService.GetAll();
+        var cars = await _carService.GetAll();
 
         return Ok(cars);
     }
 
     [HttpGet("{id:int}")]
-    public ActionResult<Car> GetById([FromRoute] int id)
+    public async Task<OkObjectResult> GetById([FromRoute] int id)
     {
-        var car = _carService.GetById(id);
+        var car = await _carService.GetById(id);
 
-        return car is null ? NotFound() : Ok(car);
+        return Ok(car);
     }
 
     [HttpGet("{slug}")]
-    public ActionResult<Car> Get([FromRoute] string slug)
+    public async Task<ActionResult<Car>> Get([FromRoute] string slug)
     {
-        var car = _carService.GetBySlug(slug);
-
-        return car is null ? NotFound() : Ok(car);
+        return Ok(await _carService.GetBySlug(slug));
     }
 
     [HttpPost]
-    public ActionResult CreateCar([FromBody] Car car)
+    public async Task<ActionResult> CreateCar([FromBody] CarDto carDto)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        int id = _carService.Create(car);
+        var id = await _carService.Create(carDto);
 
         return Created($"/api/car/{id}", null);
     }

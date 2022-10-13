@@ -6,12 +6,7 @@ namespace CarRental.Infrastructure.DAL;
 
 public class CarDbContext : DbContext
 {
-    public CarDbContext(DbContextOptions<CarDbContext> options) : base()
-    {
-    }
-
-    private static string _connectionString = CarDatabaseSettings.DbConnectionString;
-
+    private static readonly string _connectionString = CarDatabaseSettings.DbConnectionString;
     public DbSet<Car> Cars { get; set; }
     public DbSet<CarEquipment> CarEquipment { get; set; }
     public DbSet<CarBrand> CarBrand { get; set; }
@@ -43,6 +38,9 @@ public class CarDbContext : DbContext
             .Property(r => r.Name)
             .IsRequired()
             .HasMaxLength(41);
+        modelBuilder.Entity<CarEquipment>()
+            .Property(x => x.Icon)
+            .IsRequired(false);
 
         //TODO: add more db row limits
     }
