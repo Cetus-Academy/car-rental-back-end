@@ -1,3 +1,4 @@
+using CarRental.Application.Requests;
 using CarRental.Domain;
 using CarRental.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -43,9 +44,11 @@ public class CarProductController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<Product> GetBySearched([FromQuery] string searchString)
+    public ActionResult<Product> GetBySearched([FromQuery] SearchRequest request)
     {
-        var products = searchString is null ? _productService.GetAll() : _productService.GetSearched(searchString);
+        var products = request.searchString is null
+            ? _productService.GetAll()
+            : _productService.GetSearched(request.searchString);
         return Ok(products);
     }
 
