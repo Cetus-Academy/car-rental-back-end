@@ -2,12 +2,13 @@
 using CarRental.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarRental.API;
+namespace CarRental.Api.Controllers;
 
 [Route("api/carRental")]
 public class CarRentalController : ControllerBase
 {
     private readonly ICarRentalService _service;
+
     public CarRentalController(ICarRentalService service)
     {
         _service = service;
@@ -26,4 +27,4 @@ public class CarRentalController : ControllerBase
         var returnData = _service.BookCar(clientData);
         return Ok(returnData);
     }
-}   
+}

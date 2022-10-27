@@ -3,7 +3,7 @@ using CarRental.Domain;
 using CarRental.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarRental.Api;
+namespace CarRental.Api.Controllers;
 
 [ApiController]
 [Route("cars")]
@@ -31,7 +31,7 @@ public class CarController : ControllerBase
             return BadRequest(ModelState);
 
         var isUpdated = await _carService.Update(id, car);
-        
+
         return isUpdated ? Ok() : NotFound();
     }
 
