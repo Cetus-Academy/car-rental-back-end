@@ -1,5 +1,4 @@
 using CarRental.Application.Interfaces;
-using CarRental.Application.Requests;
 using CarRental.Domain;
 using CarRental.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
@@ -16,16 +15,16 @@ public class ReservationService : IReservationService
         //_mapper = mapper;
     }
 
-    public IEnumerable<Car> GetAvailableCarsByDateRange(AvailableCarsRequest request)
+    public IEnumerable<Car> GetAvailableCarsByDateRange(DateTime startDate, DateTime endDate)
     {
         var reservations = _dbContext
             .Reservations
             .Where(d =>
-                (request.StartDate <= d.DateFrom && request.StartDate <= d.DateTo)
+                (startDate <= d.DateFrom && startDate <= d.DateTo)
                 ||
-                (request.EndDate <= d.DateFrom && request.EndDate <= d.DateTo)
+                (endDate <= d.DateFrom && endDate <= d.DateTo)
                 ||
-                (request.StartDate <= d.DateFrom && request.EndDate >= d.DateTo)
+                (startDate <= d.DateFrom && endDate >= d.DateTo)
             )
             .Include(q => q.CarReservations).ThenInclude(c => c.Car)
             .ToArray();
@@ -45,18 +44,18 @@ public class ReservationService : IReservationService
         return cars;
     }
 
-    public List<int> GetOccupiedDays(int carId, OccupiedDaysRequest request)
+    public List<int> GetOccupiedDays(int carId, int year, int month)
     {
         var reservations = _dbContext
             .CarReservations
             .Where(d =>
                 (d.Car.Id == carId)
                 &&
-                (d.Reservations.DateFrom.Year < request.year ||
-                 (d.Reservations.DateFrom.Year == request.year && d.Reservations.DateFrom.Month <= request.month))
+                (d.Reservations.DateFrom.Year < year ||
+                 (d.Reservations.DateFrom.Year == year && d.Reservations.DateFrom.Month <= month))
                 &&
-                (d.Reservations.DateTo.Year > request.year ||
-                 (d.Reservations.DateTo.Year == request.year && d.Reservations.DateTo.Month >= request.month))
+                (d.Reservations.DateTo.Year > year ||
+                 (d.Reservations.DateTo.Year == year && d.Reservations.DateTo.Month >= month))
             )
             .Select(r => new
             {
@@ -71,7 +70,7 @@ public class ReservationService : IReservationService
         {
             for (var day = reservation.DateFrom.Date; day.Date <= reservation.DateTo.Date; day = day.AddDays(1))
             {
-                if (day.Year == request.year && day.Month == request.month)
+                if (day.Year == year && day.Month == month)
                     occupiedDays.Add(day.Day);
             }
         }

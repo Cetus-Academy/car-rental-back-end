@@ -3,7 +3,7 @@ using CarRental.Application.Interfaces;
 using CarRental.Domain;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarRental.Api.Controllers;
+namespace CarRental.Api;
 
 [ApiController]
 [Route("contact-form")]
