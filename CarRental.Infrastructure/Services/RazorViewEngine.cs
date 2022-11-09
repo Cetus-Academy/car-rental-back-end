@@ -13,10 +13,10 @@ namespace CarRental.Infrastructure.Services;
 
 public class RazorViewRenderer : IRazorViewRenderer
 {
-    private IRazorViewEngine _viewEngine;
-    private ITempDataProvider _tempDataProvider;
-    private IServiceProvider _serviceProvider;
-    private IHttpContextAccessor _contextAccessor;
+    private readonly IHttpContextAccessor _contextAccessor;
+    private readonly IServiceProvider _serviceProvider;
+    private readonly ITempDataProvider _tempDataProvider;
+    private readonly IRazorViewEngine _viewEngine;
 
     public RazorViewRenderer(
         IRazorViewEngine viewEngine,
@@ -41,19 +41,15 @@ public class RazorViewRenderer : IRazorViewRenderer
             var viewContext = new ViewContext(
                 actionContext,
                 view,
-                new ViewDataDictionary(metadataProvider: new EmptyModelMetadataProvider(),
-                    modelState: new ModelStateDictionary()),
+                new ViewDataDictionary(new EmptyModelMetadataProvider(),
+                    new ModelStateDictionary()),
                 new TempDataDictionary(actionContext.HttpContext, _tempDataProvider),
                 output,
                 new HtmlHelperOptions());
             viewContext.RouteData = _contextAccessor.HttpContext.GetRouteData();
-            if (viewData != null)
-            {
+            if (viewData is not null)
                 foreach (var item in viewData)
-                {
                     viewContext.ViewData.Add(item.Key, item.Value);
-                }
-            }
 
             await view.RenderAsync(viewContext);
 
@@ -80,8 +76,8 @@ public class RazorViewRenderer : IRazorViewRenderer
                 actionContext,
                 view,
                 new ViewDataDictionary<TModel>(
-                    metadataProvider: new EmptyModelMetadataProvider(),
-                    modelState: new ModelStateDictionary())
+                    new EmptyModelMetadataProvider(),
+                    new ModelStateDictionary())
                 {
                     Model = model
                 },
@@ -100,17 +96,11 @@ public class RazorViewRenderer : IRazorViewRenderer
 
     private IView FindView(ActionContext actionContext, string viewName)
     {
-        var getViewResult = _viewEngine.GetView(executingFilePath: null, viewPath: viewName, isMainPage: true);
-        if (getViewResult.Success)
-        {
-            return getViewResult.View;
-        }
+        var getViewResult = _viewEngine.GetView(null, viewName, true);
+        if (getViewResult.Success) return getViewResult.View;
 
-        var findViewResult = _viewEngine.FindView(actionContext, viewName, isMainPage: true);
-        if (findViewResult.Success)
-        {
-            return findViewResult.View;
-        }
+        var findViewResult = _viewEngine.FindView(actionContext, viewName, true);
+        if (findViewResult.Success) return findViewResult.View;
 
         var searchedLocations = getViewResult.SearchedLocations.Concat(findViewResult.SearchedLocations);
         var errorMessage = string.Join(

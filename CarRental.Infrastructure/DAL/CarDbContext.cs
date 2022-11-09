@@ -41,8 +41,6 @@ public class CarDbContext : DbContext
         modelBuilder.Entity<CarEquipment>()
             .Property(x => x.Icon)
             .IsRequired(false);
-
-        //TODO: add more db row limits
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

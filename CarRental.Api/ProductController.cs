@@ -17,58 +17,49 @@ public class CarProductController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public ActionResult Delete([FromRoute] int id)
+    public async Task<ActionResult> Delete([FromRoute] int id)
     {
-        var isDeleted = _productService.Delete(id);
+        await _productService.Delete(id);
 
-        return isDeleted ? NoContent() : NotFound();
+        return NoContent();
     }
 
     [HttpPut("{id}")]
-    public ActionResult Update([FromBody] Product product, [FromRoute] int id)
+    public async Task<ActionResult> Update([FromBody] Product product, [FromRoute] int id)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+        await _productService.Update(id, product);
 
-        var isUpdated = _productService.Update(id, product);
-
-        return isUpdated ? Ok() : NotFound();
+        return NoContent();
     }
 
     [HttpGet("{id:int}")]
-    public ActionResult<Product> GetById([FromRoute] int id)
+    public async Task<ActionResult<Product>> GetById([FromRoute] int id)
     {
-        var product = _productService.GetById(id);
+        var product = await _productService.GetById(id);
 
-        return product is null ? NotFound() : Ok(product);
+        return Ok(product);
     }
 
     [HttpGet]
-    public ActionResult<Product> GetBySearched([FromQuery] SearchRequest request)
+    public async Task<ActionResult<Product>> GetBySearched([FromQuery] SearchRequest request)
     {
-        var products = request.searchString is null
-            ? _productService.GetAll()
-            : _productService.GetSearched(request.searchString);
+        var products = await _productService.GetSearched(request.searchString);
+
         return Ok(products);
     }
 
     [HttpGet("{slug}")]
-    public ActionResult<Product> Get([FromRoute] string slug)
+    public async Task<ActionResult<Product>> Get([FromRoute] string slug)
     {
-        var product = _productService.GetBySlug(slug);
+        var product = await _productService.GetBySlug(slug);
 
-        return product is null ? NotFound() : Ok(product);
+        return Ok(product);
     }
 
     [HttpPost]
-    public ActionResult CreateProduct([FromBody] Product product)
+    public async Task<ActionResult> CreateProduct([FromBody] Product product)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
-        int id = _productService.Create(product);
+        var id = await _productService.Create(product);
 
         return Created($"/api/product/{id}", null);
     }

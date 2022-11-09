@@ -1,101 +1,104 @@
+using CarRental.Application.Exceptions;
 using CarRental.Domain;
 using CarRental.Infrastructure.DAL;
+using Microsoft.EntityFrameworkCore;
 
-namespace CarRental.Infrastructure.Services
+namespace CarRental.Infrastructure.Services;
+
+public interface IProductService
 {
-    public interface IProductService
+    Task Delete(int id);
+    Task Update(int id, Product product);
+    Task<IEnumerable<Product>> GetAll();
+    Task<IEnumerable<Product>> GetSearched(string searchString);
+    Task<Product> GetById(int id);
+    Task<Product> GetBySlug(string slug);
+    Task<int> Create(Product product);
+}
+
+public class ProductService : IProductService
+{
+    private readonly CarDbContext _dbContext;
+
+    public ProductService(CarDbContext dbContext) //, IMapper mapper
     {
-        bool Delete(int id);
-        bool Update(int id, Product product);
-        IEnumerable<Product> GetAll();
-        IEnumerable<Product> GetSearched(string searchString);
-        Product GetById(int id);
-        Product GetBySlug(string slug);
-        int Create(Product product);
+        _dbContext = dbContext;
+        //_mapper = mapper;
     }
 
-    public class ProductService : IProductService
+    public async Task Delete(int id)
     {
-        private readonly CarDbContext _dbContext;
+        var product = await _dbContext.Products.FindAsync(id);
 
-        public ProductService(CarDbContext dbContext) //, IMapper mapper
-        {
-            _dbContext = dbContext;
-            //_mapper = mapper;
-        }
+        if (product is null)
+            throw new NotFoundException("product not found");
 
-        public bool Delete(int id)
-        {
-            var product = _dbContext.Products.Find(id);
+        _dbContext.Products.Remove(product);
+        await _dbContext.SaveChangesAsync();
+    }
 
-            if (product is null) return false;
+    public async Task Update(int id, Product product)
+    {
+        var foundProduct = await _dbContext
+            .Products
+            .FirstOrDefaultAsync(r => r.Id == id);
 
-            _dbContext.Products.Remove(product);
-            _dbContext.SaveChanges();
+        if (foundProduct is null)
+            throw new NotFoundException("no products found");
 
-            return true;
-        }
+        foundProduct.Slug = product.Slug;
+        foundProduct.Description = product.Description;
 
-        public bool Update(int id, Product product)
-        {
-            var foundProduct = _dbContext
-                .Products
-                .FirstOrDefault(r => r.Id == id);
+        await _dbContext.SaveChangesAsync();
+    }
 
-            if (foundProduct is null) return false;
+    public async Task<IEnumerable<Product>> GetAll()
+    {
+        var products = await _dbContext
+            .Products
+            .ToListAsync();
 
-            foundProduct.Slug = product.Slug;
-            foundProduct.Description = product.Description;
+        return products;
+    }
 
-            _dbContext.SaveChanges();
+    public async Task<IEnumerable<Product>> GetSearched(string searchString)
+    {
+        var products = await _dbContext
+            .Products
+            .Where(p => p.Name.Contains(searchString)) //Name!
+            .ToListAsync();
 
-            return true;
-        }
+        return products;
+    }
 
-        public IEnumerable<Product> GetAll()
-        {
-            var products = _dbContext
-                .Products
-                .ToList();
+    public async Task<Product> GetById(int id)
+    {
+        var product = await _dbContext
+            .Products
+            .FirstOrDefaultAsync(r => r.Id == id);
 
-            return products;
-        }
+        if (product is null) throw new NotFoundException("product not found");
 
-        public IEnumerable<Product> GetSearched(string searchString)
-        {
-            var products = _dbContext
-                .Products
-                .Where(p => p.Name.Contains(searchString)) //Name!
-                .ToList();
+        return product;
+    }
 
-            return products;
-        }
+    public async Task<Product> GetBySlug(string slug)
+    {
+        var product = await _dbContext
+            .Products
+            .FirstOrDefaultAsync(r => r.Slug == slug);
 
-        public Product GetById(int id)
-        {
-            var product = _dbContext
-                .Products
-                .FirstOrDefault(r => r.Id == id);
+        if (product is null) throw new NotFoundException("product not found");
 
-            return product;
-        }
+        return product;
+    }
 
-        public Product GetBySlug(string slug)
-        {
-            var product = _dbContext
-                .Products
-                .FirstOrDefault(r => r.Slug == slug);
+    public async Task<int> Create(Product product)
+    {
+        //var car = _mapper.Map<Car>(dto);
+        _dbContext.Products.Add(product);
+        await _dbContext.SaveChangesAsync();
 
-            return product;
-        }
-
-        public int Create(Product product)
-        {
-            //var car = _mapper.Map<Car>(dto);
-            _dbContext.Products.Add(product);
-            _dbContext.SaveChanges();
-
-            return product.Id;
-        }
+        return product.Id;
     }
 }

@@ -8,6 +8,7 @@ namespace CarRental.API;
 public class CarRentalController : ControllerBase
 {
     private readonly ICarRentalService _service;
+
     public CarRentalController(ICarRentalService service)
     {
         _service = service;
@@ -17,6 +18,7 @@ public class CarRentalController : ControllerBase
     public ActionResult<CarRentalResultsDto> CalculateRentalPrice([FromBody] ClientDataDto clientData)
     {
         var returnData = _service.CalculateRentalPrice(clientData);
+
         return Ok(returnData);
     }
 
@@ -24,6 +26,7 @@ public class CarRentalController : ControllerBase
     public ActionResult<CarRentalResultsDto> BookCar([FromBody] ClientDataDto clientData)
     {
         var returnData = _service.BookCar(clientData);
+
         return Ok(returnData);
     }
-}   
+}

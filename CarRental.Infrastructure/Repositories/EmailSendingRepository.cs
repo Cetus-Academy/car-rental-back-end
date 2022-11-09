@@ -1,5 +1,7 @@
 using System.Net;
+using System.Text.RegularExpressions;
 using CarRental.Application;
+using CarRental.Application.Exceptions;
 using CarRental.Application.Interfaces;
 using EmailService.Models;
 using SendGrid;
@@ -18,7 +20,15 @@ public class EmailSendingRepository : IEmailSendingRepository
 
     public async Task SendFormContactEmail(string email, string message)
     {
-        var model = new CarRentalNotificationModel()
+        var regExMail = new Regex("[a-zA-Z.0-9]+([+]{1}[a-zA-Z.0-9])?@[a-zA-Z]+[.][a-zA-Z]+");
+        var regExMessage = new Regex(".+");
+
+        if (!regExMail.IsMatch(email))
+            throw new BadRequestException("Podałeś błędny email");
+        if (!regExMessage.IsMatch(message))
+            throw new BadRequestException("Nie podałeś wiadomości");
+
+        var model = new CarRentalNotificationModel
         {
             Subject = EmailSettings.Message,
             Email = email,
@@ -28,7 +38,7 @@ public class EmailSendingRepository : IEmailSendingRepository
         await Send(model);
     }
 
-    async Task Send(EmailModel model)
+    private async Task Send(EmailModel model)
     {
         var viewName = @"Views/Emails/ContactEmail.cshtml";
 

@@ -19,20 +19,17 @@ public class CarController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete([FromRoute] int id)
     {
-        var isDeleted = await _carService.Delete(id);
+        await _carService.Delete(id);
 
-        return isDeleted ? NoContent() : NotFound();
+        return NoContent();
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult> Update([FromBody] Car car, [FromRoute] int id)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+        await _carService.Update(id, car);
 
-        var isUpdated = await _carService.Update(id, car);
-        
-        return isUpdated ? Ok() : NotFound();
+        return NoContent();
     }
 
     [HttpGet]
@@ -54,17 +51,14 @@ public class CarController : ControllerBase
     [HttpGet("{slug}")]
     public async Task<ActionResult<Car>> Get([FromRoute] string slug)
     {
-        return Ok(await _carService.GetBySlug(slug));
+        var car = await _carService.GetBySlug(slug);
+
+        return Ok(car);
     }
 
     [HttpPost]
     public async Task<ActionResult> CreateCar([FromBody] CarDto carDto)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         var id = await _carService.Create(carDto);
 
         return Created($"/api/car/{id}", null);

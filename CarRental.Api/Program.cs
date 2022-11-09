@@ -6,7 +6,6 @@ using CarRental.Infrastructure.DAL;
 using CarRental.Infrastructure.Repositories;
 using CarRental.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using CarSeeder = CarRental.Infrastructure.DAL.CarSeeder;
 
 var builder = WebApplication.CreateBuilder(args);
 

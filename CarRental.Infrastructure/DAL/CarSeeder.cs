@@ -10,20 +10,20 @@ public class CarSeeder
     {
         _dbContext = dbContext;
     }
-        
+
     public void Seed()
     {
         if (!_dbContext.Database.CanConnect()) return;
-            if (_dbContext.Cars.Any()) return;
-                _dbContext.Products.AddRange(GetProducts());
-                _dbContext.CarRentals.AddRange(GetCarRental());
-                // _dbContext.CarBrand.AddRange(GetCarBrand());
-                _dbContext.SaveChanges();
+        if (_dbContext.Cars.Any()) return;
+        _dbContext.Products.AddRange(GetProducts());
+        _dbContext.CarRentals.AddRange(GetCarRental());
+        // _dbContext.CarBrand.AddRange(GetCarBrand());
+        _dbContext.SaveChanges();
     }
 
     private IEnumerable<Product> GetProducts()
     {
-        var products = new List<Product>()
+        var products = new List<Product>
         {
             new()
             {
@@ -33,16 +33,16 @@ public class CarSeeder
                 VatPercentage = 0.23,
                 Condition = "nowy",
                 Description = "Dziesięć sztuk nakajek na samochód",
-                Images = new List<Image>()
+                Images = new List<Image>
                 {
-                    new Image()
+                    new()
                     {
                         Src =
                             "https://a.allegroimg.com/original/11ce9c/6d70593b4015b139321a2344b6cf/Zestaw-naklejek-na-samochod-LAMINOWANE-UV",
                         Alt = "Zestaw naklejek na samochód"
                     }
                 }
-            },
+            }
         };
         return products;
     }
@@ -56,15 +56,16 @@ public class CarSeeder
             Street = "Makłowicza 12",
             PostalCode = "00-000",
             PricePerDay = 120,
-            Cars = new List<Car>()
+            Cars = new List<Car>
             {
-                GetCars(),
+                GetCars()
             }
         };
     }
+
     private Car GetCars()
     {
-        var results = new Car()
+        var results = new Car
         {
             Slug = "volkswagen-passat-b8",
             Name = "volkswagen passat b8",
@@ -72,7 +73,7 @@ public class CarSeeder
             Generate = "B8",
             YearOfProduction = 2018,
             //Mileage = 60 000,
-            Displacement = 1998,        
+            Displacement = 1998,
             //FuelType = 2,
             PriceCategory = "Basic",
             FuelType = "DIESEL",
@@ -82,12 +83,13 @@ public class CarSeeder
             NumberOfPlaces = 5,
             //CountryOfOrigin = "Polska",
             FuelUsage = 7.5,
-            Description = "Do wynajęcia Volkswagen Passat B8. Samochód ma około 60 000 przebiegu, jest w stanie dobrym. Kupiony został w Polsce, jest w 100% bezwypadkowy. Wszystkie elementy nadwozia są w oryginalnym lakierze.",
-            CarBrand = new()
+            Description =
+                "Do wynajęcia Volkswagen Passat B8. Samochód ma około 60 000 przebiegu, jest w stanie dobrym. Kupiony został w Polsce, jest w 100% bezwypadkowy. Wszystkie elementy nadwozia są w oryginalnym lakierze.",
+            CarBrand = new CarBrand
             {
                 Description = "Volkswagen is...",
                 Name = "Volkswagen",
-                Images = new List<Image>()
+                Images = new List<Image>
                 {
                     new()
                     {
@@ -96,35 +98,35 @@ public class CarSeeder
                     }
                 }
             },
-            CarReservations = new List<CarReservations>()
+            CarReservations = new List<CarReservations>
             {
-                new CarReservations()
+                new()
                 {
-                    Reservations = new Reservations()
+                    Reservations = new Reservations
                     {
                         Status = "OK",
                         DateFrom = new DateTime(2022, 12, 12), //format YYYY-MM-DD
                         DateTo = new DateTime(2022, 12, 14), //format YYYY-MM-DD
                         Name = "Oskar",
                         LastName = "Kowalski"
-                    },
+                    }
                 },
-                new CarReservations()
+                new()
                 {
-                    Reservations = new Reservations()
+                    Reservations = new Reservations
                     {
                         Status = "OK",
                         DateFrom = new DateTime(2022, 12, 15), //format YYYY-MM-DD
                         DateTo = new DateTime(2022, 12, 17), //format YYYY-MM-DD
                         Name = "Oskar",
                         LastName = "Kowalski"
-                    },
-                },
+                    }
+                }
             },
 
-            CarLocation = new List<CarLocation>()
+            CarLocation = new List<CarLocation>
             {
-                new CarLocation()
+                new()
                 {
                     DateTime = new DateTimeOffset(2022, 10, 10, 16, 00, 00,
                         new TimeSpan(0, 0, 0)), //format: YYYY-MM-DD HH:MI:SS
@@ -132,125 +134,125 @@ public class CarSeeder
                     Name = "Oskar",
                     LastName = "Kowalski"
                 },
-                new CarLocation()
+                new()
                 {
                     DateTime = new DateTimeOffset(2022, 12, 17, 16, 00, 00,
                         new TimeSpan(0, 0, 0)), //format: YYYY-MM-DD HH:MI:SS
                     Location = "Rzeszow",
                     Name = "Oskar",
                     LastName = "Kowwalski"
-                },
+                }
             },
-            Images = new List<Image>()
+            Images = new List<Image>
             {
-                new Image()
+                new()
                 {
                     Src =
                         "https://thumbs.img-sprzedajemy.pl/1000x901c/99/a6/91/volkswagen-passat-b8-kombi-data-produkcji-22-diesel-531704361.jpg",
                     Alt = "Passat B8 zdjęcie"
                 },
-                new Image()
+                new()
                 {
                     Src = "https://bi.im-g.pl/im/d3/14/10/z16860627IER,Volkswagen-Passat-B8.jpg",
                     Alt = "Passat B8 zdjęcie"
                 },
-                new Image()
+                new()
                 {
                     Src =
                         "https://thumbs.img-sprzedajemy.pl/1000x901c/5e/b8/09/volkswagen-passat-b8-18-tsi-180-comfortline-swiatla-led-warszawa-527498534.jpg",
                     Alt = "Passat B8 zdjęcie"
                 },
-                new Image()
+                new()
                 {
                     Src =
                         "https://thumbs.img-sprzedajemy.pl/1000x901c/9a/92/84/volkswagen-passat-b8-18-tsi-180-comfortline-centralny-zamek-mazowieckie-warszawa-527498537.jpg",
                     Alt = "Passat B8 zdjęcie"
                 },
-                new Image()
+                new()
                 {
                     Src = "https://bi.im-g.pl/im/c9/14/10/z16860617AMP,Volkswagen-Passat-B8.jpg",
                     Alt = "Passat B8 zdjęcie"
                 },
-                new Image()
+                new()
                 {
                     Src =
                         "https://thumbs.img-sprzedajemy.pl/1000x901c/12/de/f2/volkswagen-passat-comfortline-salon-polska-1wl-manualna-wloclawek-555476152.jpg",
                     Alt = "Passat B8 zdjęcie"
                 }
             },
-            CarEquipments = new List<CarEquipment>()
+            CarEquipments = new List<CarEquipment>
             {
-                new CarEquipment()
+                new()
                 {
                     Name = "Interfejs Bluetooth"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "Zestaw głośnomówiący"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "Gniazdo USB"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "System nawigacji satelitarnej"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "Klimatyzacja automatyczna (dwustrefowa)"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "Podłokietniki"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "Kierownica ze sterowaniem radia"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "Podgrzewane fotele"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "Kierownica wielofunkcyjna"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "Lusterka boczne ustawiane elektrycznie"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "Asystent świateł drogowych"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "System Start/Stop"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "Oświetlenie wnętrza LED"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "ESP"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "Poduszka powietrzna kierowcy"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "Boczna poduszka powietrzna kierowcy"
                 },
-                new CarEquipment()
+                new()
                 {
                     Name = "System wspomagania hamowania"
                 }
             }
         };
-        
+
         return results;
     }
 }

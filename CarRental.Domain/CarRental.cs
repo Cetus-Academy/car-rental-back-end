@@ -8,5 +8,5 @@ public class CarRental
     public string Street { get; set; }
     public string PostalCode { get; set; }
     public int PricePerDay { get; set; }
-    public List<Car> Cars { get; set; } = new List<Car>();
+    public List<Car> Cars { get; set; } = new();
 }

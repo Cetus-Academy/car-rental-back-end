@@ -1,9 +1,16 @@
-using CarRental.Application.Interfaces;
+using System.Text.RegularExpressions;
+using CarRental.Application.Exceptions;
 using CarRental.Domain;
 using CarRental.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarRental.Infrastructure.Services;
+
+public interface IReservationService
+{
+    Task<IEnumerable<Car>> GetAvailableCarsByDateRange(DateTime startDate, DateTime endDate);
+    Task<List<int>> GetOccupiedDays(int carId, int year, int month);
+}
 
 public class ReservationService : IReservationService
 {
@@ -15,26 +22,11 @@ public class ReservationService : IReservationService
         //_mapper = mapper;
     }
 
-    public IEnumerable<Car> GetAvailableCarsByDateRange(DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<Car>> GetAvailableCarsByDateRange(DateTime startDate, DateTime endDate)
     {
-        var reservations = _dbContext
-            .Reservations
-            .Where(d =>
-                (startDate <= d.DateFrom && startDate <= d.DateTo)
-                ||
-                (endDate <= d.DateFrom && endDate <= d.DateTo)
-                ||
-                (startDate <= d.DateFrom && endDate >= d.DateTo)
-            )
-            .Include(q => q.CarReservations).ThenInclude(c => c.Car)
-            .ToArray();
+        var reservations = await ArrayOfReservationsInDateRange(startDate, endDate);
 
-        var carsIds = new List<int>();
-        foreach (var reservation in reservations)
-        {
-            var reservedCarId = reservation.CarReservations.Select(q => q.Car.Id).ToList();
-            carsIds.AddRange(reservedCarId);
-        }
+        var carsIds = GetCarIdsFromReservationList(reservations);
 
         var cars = _dbContext
             .Cars
@@ -44,12 +36,42 @@ public class ReservationService : IReservationService
         return cars;
     }
 
-    public List<int> GetOccupiedDays(int carId, int year, int month)
+    private static List<int> GetCarIdsFromReservationList(Reservations[] reservations)
     {
-        var reservations = _dbContext
+        var carsIds = new List<int>();
+        foreach (var reservation in reservations)
+        {
+            var reservedCarId = reservation.CarReservations.Select(q => q.Car.Id).ToList();
+            carsIds.AddRange(reservedCarId);
+        }
+
+        return carsIds;
+    }
+
+    private async Task<Reservations[]> ArrayOfReservationsInDateRange(DateTime startDate, DateTime endDate)
+    {
+        var reservations = await _dbContext
+            .Reservations
+            .Where(d =>
+                (startDate <= d.DateFrom && startDate <= d.DateTo)
+                ||
+                (endDate <= d.DateFrom && endDate <= d.DateTo)
+                ||
+                (startDate <= d.DateFrom && endDate >= d.DateTo)
+            )
+            .Include(q => q.CarReservations).ThenInclude(c => c.Car)
+            .ToArrayAsync();
+        return reservations;
+    }
+
+    public async Task<List<int>> GetOccupiedDays(int carId, int year, int month)
+    {
+        ValidateYearAndMonth(year, month);
+
+        var reservations = await _dbContext
             .CarReservations
             .Where(d =>
-                (d.Car.Id == carId)
+                d.Car.Id == carId
                 &&
                 (d.Reservations.DateFrom.Year < year ||
                  (d.Reservations.DateFrom.Year == year && d.Reservations.DateFrom.Month <= month))
@@ -62,21 +84,26 @@ public class ReservationService : IReservationService
                 r.Reservations.DateFrom,
                 r.Reservations.DateTo
             })
-            .ToArray();
+            .ToArrayAsync();
 
         var occupiedDays = new List<int>();
 
         foreach (var reservation in reservations)
-        {
             for (var day = reservation.DateFrom.Date; day.Date <= reservation.DateTo.Date; day = day.AddDays(1))
-            {
                 if (day.Year == year && day.Month == month)
                     occupiedDays.Add(day.Day);
-            }
-        }
 
         occupiedDays = occupiedDays.Distinct().ToList();
 
         return occupiedDays;
+    }
+
+    private static void ValidateYearAndMonth(int year, int month)
+    {
+        var regExYear = new Regex("[0-9]{4}");
+        var regExMonth = new Regex("[0-9]{1,2}");
+
+        if (!regExYear.IsMatch(year.ToString()) && !regExMonth.IsMatch(month.ToString()))
+            throw new BadRequestException("year/month is not in a valid format");
     }
 }

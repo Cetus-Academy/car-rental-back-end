@@ -10,6 +10,7 @@ public class CarErrorHandlingMiddleware : IMiddleware
     {
         _logger = logger;
     }
+
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         try

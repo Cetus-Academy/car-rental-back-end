@@ -1,8 +1,6 @@
-using CarRental.Application.Dto;
 using CarRental.Application.Interfaces;
 using CarRental.Domain;
 using CarRental.Infrastructure.DAL;
-using Microsoft.EntityFrameworkCore;
 
 namespace CarRental.Infrastructure.Repositories;
 
@@ -14,6 +12,7 @@ public class CarRentalRepository : ICarRentalRepository
     {
         _dbContext = dbContext;
     }
+
     //Todo: przerobić tak aby działało to tutuaj
     public Car GetCarAndReservationsByCarId(int carId)
     {
