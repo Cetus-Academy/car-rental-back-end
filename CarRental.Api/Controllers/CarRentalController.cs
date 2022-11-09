@@ -2,7 +2,7 @@
 using CarRental.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarRental.API;
+namespace CarRental.Api.Controllers;
 
 [Route("api/carRental")]
 public class CarRentalController : ControllerBase

@@ -2,7 +2,7 @@ using CarRental.Application.Interfaces;
 using CarRental.Domain;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarRental.Api;
+namespace CarRental.Api.Controllers;
 
 [ApiController]
 [Route("contact-form")]

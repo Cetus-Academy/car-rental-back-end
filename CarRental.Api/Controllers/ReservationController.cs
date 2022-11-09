@@ -1,9 +1,9 @@
-using System.Text.RegularExpressions;
+using CarRental.Application.Requests;
 using CarRental.Domain;
 using CarRental.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarRental.Api;
+namespace CarRental.Api.Controllers;
 
 [ApiController]
 [Route("reservation-module")]
@@ -17,17 +17,17 @@ public class CarReservationController : ControllerBase
     }
 
     [HttpGet("avaible-cars")]
-    public ActionResult<IEnumerable<Car>> GetAvailableCars([FromQuery] DateTime dateFrom, [FromQuery] DateTime dateTo)
+    public ActionResult<IEnumerable<Car>> GetAvailableCars([FromQuery] AvailableCarsRequest request)
     {
-        var cars = _reservationService.GetAvailableCarsByDateRange(dateFrom, dateTo);
+        var cars = _reservationService.GetAvailableCarsByDateRange(request);
 
         return Ok(cars);
     }
 
     [HttpGet("car/{carId:int}/occupied-days")]
-    public ActionResult<int[]> GetOccupiedDays([FromRoute] int carId, [FromQuery] int year, [FromQuery] int month)
+    public ActionResult<int[]> GetOccupiedDays([FromRoute] int carId, [FromQuery] OccupiedDaysRequest request)
     {
-        var cars = _reservationService.GetOccupiedDays(carId, year, month);
+        var cars = _reservationService.GetOccupiedDays(carId, request);
 
         return Ok(cars);
     }

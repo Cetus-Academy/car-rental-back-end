@@ -3,7 +3,7 @@ using CarRental.Domain;
 using CarRental.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarRental.Api;
+namespace CarRental.Api.Controllers;
 
 [ApiController]
 [Route("cars")]
